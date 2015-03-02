@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity
             mDialog.setMessage("Loading...");
         }
 
-        NetworkWorker<List<Repo>> worker = new NetworkWorker<List<Repo>>() {
+        NetworkWorker worker = new NetworkWorker<List<Repo>>() {
             @Override
             public List<Repo> getWorkpiece() {
                 return getApiInterface().listRepos("tonyjs");
@@ -70,7 +70,8 @@ public class MainActivity extends ActionBarActivity
             return;
         }
 
-        mAdapter.addAll(workpiece.getData());
+        List<Repo> repos = workpiece.getData();
+        mAdapter.addAll(repos);
 
 //        Toast.makeText(this, workpiece.toString(), Toast.LENGTH_SHORT).show();
     }

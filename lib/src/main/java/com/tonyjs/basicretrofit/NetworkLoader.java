@@ -9,7 +9,7 @@ import android.view.View;
  * Created by tonyjs on 15. 2. 13..
  */
 public class NetworkLoader<T>
-        extends AsyncTask<NetworkWorker<T>, Integer, NetworkWorkpiece<T>> {
+        extends AsyncTask<NetworkWorker, Integer, NetworkWorkpiece> {
 
     public static final String TAG = NetworkLoader.class.getSimpleName();
 
@@ -58,10 +58,10 @@ public class NetworkLoader<T>
     }
 
     @Override
-    protected NetworkWorkpiece<T> doInBackground(NetworkWorker<T>... params) {
-        NetworkWorker<T> networkRunnable = params[0];
+    protected NetworkWorkpiece<T> doInBackground(NetworkWorker... params) {
+        NetworkWorker networkRunnable = params[0];
         if (networkRunnable == null) {
-            NetworkWorkpiece<T> workpiece = new NetworkWorkpiece<>();
+            NetworkWorkpiece workpiece = new NetworkWorkpiece();
             workpiece.setSuccess(false);
             workpiece.setData(null);
             workpiece.setError("NetworkWorkpiece is null");
@@ -71,8 +71,7 @@ public class NetworkLoader<T>
         NetworkWorkpiece<T> workpiece = new NetworkWorkpiece<>();
 
         try {
-            T data = networkRunnable.getWorkpiece();
-            workpiece.setData(data);
+            workpiece.setData((T) networkRunnable.getWorkpiece());
             workpiece.setError(null);
             workpiece.setSuccess(true);
         } catch (Exception e) {
@@ -86,7 +85,7 @@ public class NetworkLoader<T>
     }
 
     @Override
-    protected void onPostExecute(NetworkWorkpiece<T> workpiece) {
+    protected void onPostExecute(NetworkWorkpiece workpiece) {
         if (isCancelled() || workpiece == null) {
             Log.e(TAG, isCancelled() ? "Cancelled" : "Workpiece is null");
             return;
