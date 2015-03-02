@@ -15,7 +15,9 @@ Using Retrofit with AsyncTask
   
               if (!workpiece.isSuccess()) {
                   Toast.makeText(
-                          getApplicationContext(), workpiece.getError(), Toast.LENGTH_SHORT).show();
+                          getApplicationContext(), 
+                          workpiece.getError(), 
+                          Toast.LENGTH_SHORT).show();
                   return;
               }
           }
